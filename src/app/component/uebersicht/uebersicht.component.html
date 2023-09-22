@@ -1,0 +1,67 @@
+<div class="container mt-5">
+  <h1 class="text-center p-3 border rounded-1 bg-light">
+    Tilgungsplan-Rechner
+  </h1>
+
+  <div class="container mt-5">
+    <form [formGroup]="form">
+      <div class="row">
+        <div class="col">
+          <label class="form-label fw-bold">Darlehnsbetrag</label>
+          <input
+            type="number"
+            placeholder="Darlehnsbetrag"
+            class="form-control"
+            name="darlehnsbetrag"
+            formControlName="darlehnsbetrag"
+          />
+        </div>
+        <div class="col">
+          <label class="form-label fw-bold">Sollzins</label>
+          <input
+            type="number"
+            placeholder="Sollzins"
+            class="form-control"
+            name="sollzins"
+            formControlName="sollzins"
+          />
+        </div>
+      </div>
+
+      <div class="row mt-3">
+        <div class="col">
+          <label class="form-label fw-bold">Tilgung</label>
+          <input
+            type="number"
+            placeholder="Tilgung"
+            class="form-control"
+            name="tilgung"
+            formControlName="tilgung"
+          />
+        </div>
+        <div class="col">
+          <label class="form-label fw-bold">Zinsbindung</label>
+          <input
+            type="number"
+            placeholder="Zinsbindung"
+            class="form-control"
+            name="zinsbindung"
+            formControlName="zinsbindung"
+          />
+        </div>
+      </div>
+
+      <div class="row mt-5">
+        <div class="col">
+          <button class="btn btn-primary" (click)="formSubmit()">
+            Berechnen
+          </button>
+        </div>
+      </div>
+    </form>
+  </div>
+
+  <div class="row mt-5">
+    <app-table [entry]="tilgungsplan"></app-table>
+  </div>
+</div>

@@ -1,0 +1,20 @@
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th scope="col">Datum</th>
+      <th scope="col">Restschuld</th>
+      <th scope="col">Zinsen</th>
+      <th scope="col">Tilgung(+) / Auszahlung (-)</th>
+      <th scope="col">Rate</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let entry of entry">
+      <td class="fw-bold">{{ entry.date }}</td>
+      <td>{{ entry.remainingBalance }} €</td>
+      <td>{{ entry.interest }} €</td>
+      <td>{{ entry.repayment }} €</td>
+      <td>{{ entry.rate }} €</td>
+    </tr>
+  </tbody>
+</table>
