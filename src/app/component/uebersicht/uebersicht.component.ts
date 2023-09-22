@@ -104,9 +104,4 @@ export class UebersichtComponent {
 
     this.tilgungsplan.push(finalEntry);
   }
-
-
-  finalEntry(entry:any){
-
-  }
 }
