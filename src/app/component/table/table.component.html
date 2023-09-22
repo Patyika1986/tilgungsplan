@@ -1,4 +1,4 @@
-<table class="table table-striped">
+<table class="table table-striped scale-in-ver-top">
   <thead>
     <tr>
       <th scope="col">Datum</th>
@@ -9,11 +9,11 @@
     </tr>
   </thead>
   <tbody>
-    <tr *ngFor="let entry of entry">
+    <tr class="scale-in-ver-top" *ngFor="let entry of entry">
       <td class="fw-bold">{{ entry.date }}</td>
-      <td>{{ entry.remainingBalance }} €</td>
+      <td>{{ entry.restSume }} €</td>
       <td>{{ entry.interest }} €</td>
-      <td>{{ entry.repayment }} €</td>
+      <td>{{ entry.rueckZahlung }} €</td>
       <td>{{ entry.rate }} €</td>
     </tr>
   </tbody>

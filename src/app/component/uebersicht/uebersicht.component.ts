@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-
 import { FormBuilder, Validators } from '@angular/forms';
 
 @Component({
@@ -13,7 +12,7 @@ export class UebersichtComponent {
   public form = this.formBuilder.group({
     darlehnsbetrag: [
       '',
-      Validators.compose([Validators.required, Validators.minLength(10)]),
+      Validators.compose([Validators.required, Validators.minLength(1)]),
     ],
     sollzins: [
       '',
@@ -29,10 +28,10 @@ export class UebersichtComponent {
     ],
   });
 
-  darlehensbetrag: number = 0;
-  sollzins: number = 0;
-  tilgung: number = 0;
-  zinsbindung: number = 0;
+  public darlehensbetrag: number = 0;
+  public sollzins: number = 0;
+  public tilgung: number = 0;
+  public zinsbindung: number = 0;
 
   tilgungsplan: any[] = [];
 
@@ -51,43 +50,43 @@ export class UebersichtComponent {
   calculateTilgungsplan() {
     this.tilgungsplan = []; // Leere den bestehenden Tilgungsplan
 
-    const monthlyInterestRate = this.sollzins / 12 / 100; // Monatlicher Zinssatz
-    const monthlyPayment =
-      (this.darlehensbetrag * monthlyInterestRate) /
-      (1 - Math.pow(1 + monthlyInterestRate, -this.zinsbindung * 12)); // Monatliche Rate
+    const monatlicheZinsSatz = this.sollzins / 12 / 100; // Monatlicher Zinssatz
+    const monatlicheZahlung =
+      (this.darlehensbetrag * monatlicheZinsSatz) /
+      (1 - Math.pow(1 + monatlicheZinsSatz, -this.zinsbindung * 12)); // Monatliche Rate
 
-    let remainingBalance = this.darlehensbetrag;
-    let currentDate = new Date();
+    let verbleibendeSume = this.darlehensbetrag;
+    let aktuellesDatum = new Date();
 
     for (let month = 0; month < this.zinsbindung * 12; month++) {
-      const interestPayment = remainingBalance * monthlyInterestRate; // Zinsen
-      const principalPayment = monthlyPayment - interestPayment; // Tilgung
+      const zinsZahlung = verbleibendeSume * monatlicheZinsSatz; // Zinsen
+      const kapitalZahlung = monatlicheZahlung - zinsZahlung; // Tilgung
 
       const lastDayOfMonth = new Date(
-        currentDate.getFullYear(),
-        currentDate.getMonth() + 1,
+        aktuellesDatum.getFullYear(),
+        aktuellesDatum.getMonth() + 1,
         0
       );
 
       // Setze das Datum auf den letzten Tag des aktuellen Monats
-      currentDate = lastDayOfMonth;
+      aktuellesDatum = lastDayOfMonth;
 
       const entry = {
-        date: currentDate.toLocaleDateString(),
-        remainingBalance: remainingBalance.toFixed(2),
-        interest: interestPayment.toFixed(2),
-        repayment: principalPayment.toFixed(2),
-        rate: monthlyPayment.toFixed(2),
+        date: aktuellesDatum.toLocaleDateString(),
+        restSume: verbleibendeSume.toFixed(2),
+        interest: zinsZahlung.toFixed(2),
+        rueckZahlung: kapitalZahlung.toFixed(2),
+        rate: monatlicheZahlung.toFixed(2),
       };
 
       this.tilgungsplan.push(entry);
 
-      remainingBalance -= principalPayment;
+      verbleibendeSume -= kapitalZahlung;
 
       // Gehe zum nächsten Monat
-      currentDate = new Date(
-        currentDate.getFullYear(),
-        currentDate.getMonth() + 1,
+      aktuellesDatum = new Date(
+        aktuellesDatum.getFullYear(),
+        aktuellesDatum.getMonth() + 1,
         1
       );
     }
@@ -95,10 +94,10 @@ export class UebersichtComponent {
     // Berechne Restschuld und geleistete Zahlungen am Ende der Zinsbindung
     const finalEntry = {
       date: 'Ende der Zinsbindung',
-      remainingBalance: remainingBalance.toFixed(2),
-      interest: (remainingBalance * monthlyInterestRate).toFixed(2),
-      repayment: (this.darlehensbetrag - remainingBalance).toFixed(2),
-      rate: (remainingBalance + remainingBalance * monthlyInterestRate).toFixed(
+      restSume: verbleibendeSume.toFixed(2),
+      interest: (verbleibendeSume * monatlicheZinsSatz).toFixed(2),
+      rueckZahlung: (this.darlehensbetrag - verbleibendeSume).toFixed(2),
+      rate: (verbleibendeSume + verbleibendeSume * monatlicheZinsSatz).toFixed(
         2
       ),
     };

@@ -15,6 +15,12 @@
             name="darlehnsbetrag"
             formControlName="darlehnsbetrag"
           />
+          <label
+            class="text-danger mt-1"
+            *ngIf="form.get('darlehnsbetrag')?.hasError('required')"
+          >
+            * Pflicht feld!
+          </label>
         </div>
         <div class="col">
           <label class="form-label fw-bold">Sollzins</label>
@@ -25,6 +31,12 @@
             name="sollzins"
             formControlName="sollzins"
           />
+          <label
+            class="text-danger mt-1"
+            *ngIf="form.get('sollzins')?.hasError('required')"
+          >
+            * Pflicht feld!
+          </label>
         </div>
       </div>
 
@@ -38,6 +50,12 @@
             name="tilgung"
             formControlName="tilgung"
           />
+          <label
+            class="text-danger mt-1"
+            *ngIf="form.get('tilgung')?.hasError('required')"
+          >
+            * Pflicht feld!
+          </label>
         </div>
         <div class="col">
           <label class="form-label fw-bold">Zinsbindung</label>
@@ -48,12 +66,22 @@
             name="zinsbindung"
             formControlName="zinsbindung"
           />
+          <label
+            class="text-danger mt-1"
+            *ngIf="form.get('zinsbindung')?.hasError('required')"
+          >
+            * Pflicht feld!
+          </label>
         </div>
       </div>
 
       <div class="row mt-5">
         <div class="col">
-          <button class="btn btn-primary" (click)="formSubmit()">
+          <button
+            class="btn btn-primary"
+            (click)="formSubmit()"
+            [disabled]="!form.valid"
+          >
             Berechnen
           </button>
         </div>
